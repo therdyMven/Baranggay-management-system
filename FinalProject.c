@@ -112,39 +112,19 @@ void searchResident() {
         return;
     }
 
-    char nameSearch[50];
-    int ageSearch, searchChoice;
-    char name[50], address[100], line[200];
-    int age;
-    int found = 0;
+    char nameSearch[50], name[50], address[100], line[200];
+    int age, found = 0;
 
-    printf("Search by:\n");
-    printf("1. Name\n");
-    printf("2. Age\n");
-    printf("3. Both Name and Age\n");
-    printf("Enter choice: ");
-    scanf("%d", &searchChoice);
-    while (getchar() != '\n'); // Clear buffer
-
-    if (searchChoice == 1 || searchChoice == 3) {
-        printf("Enter Name: ");
-        fgets(nameSearch, sizeof(nameSearch), stdin);
-        nameSearch[strcspn(nameSearch, "\n")] = 0;
-    }
-    if (searchChoice == 2 || searchChoice == 3) {
-        printf("Enter Age: ");
-        scanf("%d", &ageSearch);
-        while (getchar() != '\n'); // Clear buffer
-    }
+    printf("Enter Name (partial search allowed): ");
+    fgets(nameSearch, sizeof(nameSearch), stdin);
+    nameSearch[strcspn(nameSearch, "\n")] = 0; // Remove newline
 
     printf("\nSearch Results:\n");
     while (fgets(line, sizeof(line), file)) {
         sscanf(line, "%49[^,], %d, %99[^\n]", name, &age, address);
 
-        if ((searchChoice == 1 && strcmp(name, nameSearch) == 0) ||
-            (searchChoice == 2 && age == ageSearch) ||
-            (searchChoice == 3 && strcmp(name, nameSearch) == 0 && age == ageSearch)) {
-            printf("%s, %d, %s\n", name, age, address);
+        if (strstr(name, nameSearch) != NULL) { // Check if partial match
+            printf("🔍 %s, %d, %s\n", name, age, address);
             found = 1;
         }
     }
@@ -212,5 +192,41 @@ void editResident() {
 
 // Function to Delete Resident
 void deleteResident() {
-    // (Same deletion logic as before)
+    FILE *file = fopen("residents.txt", "r");
+    FILE *temp = fopen("temp.txt", "w");
+
+    if (file == NULL || temp == NULL) {
+        printf("Error accessing files!\n");
+        return;
+    }
+
+    char nameToDelete[50], line[200], name[50], address[100];
+    int age, found = 0;
+
+    printf("Enter Name of Resident to Delete: ");
+    fgets(nameToDelete, sizeof(nameToDelete), stdin);
+    nameToDelete[strcspn(nameToDelete, "\n")] = 0;
+
+    while (fgets(line, sizeof(line), file)) {
+        sscanf(line, "%49[^,], %d, %99[^\n]", name, &age, address);
+
+        if (strcmp(name, nameToDelete) == 0) {
+            found = 1;
+        } else {
+            fprintf(temp, "%s\n", line);
+        }
+    }
+
+    fclose(file);
+    fclose(temp);
+    remove("residents.txt");
+    rename("temp.txt", "residents.txt");
+
+    if (found) {
+        printf("Resident deleted successfully!\n");
+    } else {
+        printf("Resident not found!\n");
+    }
+
+    system("pause");
 }
