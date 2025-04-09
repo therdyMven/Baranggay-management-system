@@ -15,6 +15,8 @@
 void addResident();
 void viewResidents();
 void searchResident();
+void deleteResident();
+void editResident();
 void menu();
 char *strcasestr_custom(const char *haystack, const char *needle);
 
@@ -35,7 +37,9 @@ void menu() {
         printf("1. Add Resident\n");
         printf("2. View Residents\n");
         printf("3. Search Resident\n");
-        printf("4. Exit\n");
+        printf("4. Delete Resident\n");
+        printf("5. Edit Resident\n");
+        printf("6. Exit\n");
         printf("==========================================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -45,10 +49,12 @@ void menu() {
             case 1: addResident(); break;
             case 2: viewResidents(); break;
             case 3: searchResident(); break;
-            case 4: printf("Exiting...\n"); break;
+            case 4: deleteResident(); break;
+            case 5: editResident(); break;
+            case 6: printf("Exiting...\n"); break;
             default: printf("Invalid choice! Try again.\n");
         }
-    } while (choice != 4);
+    } while (choice != 6);
 }
 
 // Function to Add Resident
@@ -80,7 +86,7 @@ void addResident() {
     printf("Resident added successfully!\n");
 }
 
-// Function to View Residents in a Table Format
+// Function to View Residents
 void viewResidents() {
     FILE *file = fopen("residents.txt", "r");
     if (file == NULL) {
@@ -92,7 +98,7 @@ void viewResidents() {
     int age;
 
     printf("\n==========================================\n");
-    printf("NAME              AGE          ADDRESS\n");
+    printf("   #   NAME                 AGE   ADDRESS\n");
     printf("==========================================\n");
 
     int index = 1;
@@ -105,7 +111,7 @@ void viewResidents() {
     system("pause");
 }
 
-// Function to Search Resident with Case-Insensitive & Partial Matching
+// Function to Search Resident
 void searchResident() {
     FILE *file = fopen("residents.txt", "r");
     if (file == NULL) {
@@ -146,15 +152,86 @@ void searchResident() {
     system("pause");
 }
 
-// Custom Case-Insensitive Substring Search Function
-char *strcasestr_custom(const char *haystack, const char *needle) {
-    static char haystack_lower[100], needle_lower[100];
+// Function to Delete Resident by Selecting from a Numbered List
+void deleteResident() {
+    FILE *file = fopen("residents.txt", "r");
+    if (file == NULL) {
+        printf("No residents found!\n");
+        return;
+    }
 
-    strcpy(haystack_lower, haystack);
-    strcpy(needle_lower, needle);
+    char name[50], address[100], line[200], residents[MAX][200];
+    int age, index = 0, selection, found = 0;
 
-    for (int i = 0; haystack_lower[i]; i++) haystack_lower[i] = tolower(haystack_lower[i]);
-    for (int i = 0; needle_lower[i]; i++) needle_lower[i] = tolower(needle_lower[i]);
+    while (fgets(line, sizeof(line), file)) {
+        strcpy(residents[index++], line);
+    }
+    fclose(file);
 
-    return strstr(haystack_lower, needle_lower);
+    viewResidents();
+    printf("Select Resident Number to Delete: ");
+    scanf("%d", &selection);
+    while (getchar() != '\n');
+
+    FILE *tempFile = fopen("temp.txt", "w");
+    for (int i = 0; i < index; i++) {
+        if (i + 1 != selection) {
+            fprintf(tempFile, "%s", residents[i]);
+        } else {
+            found = 1;
+        }
+    }
+    fclose(tempFile);
+
+    if (found) {
+        remove("residents.txt");
+        rename("temp.txt", "residents.txt");
+        printf("Resident deleted successfully!\n");
+    } else {
+        printf("Invalid selection.\n");
+    }
+}
+
+// Function to Edit Resident Details
+void editResident() {
+    FILE *file = fopen("residents.txt", "r");
+    if (file == NULL) {
+        printf("No residents found!\n");
+        return;
+    }
+
+    char name[50], address[100], line[200], residents[MAX][200];
+    int age, index = 0, selection;
+
+    while (fgets(line, sizeof(line), file)) {
+        strcpy(residents[index++], line);
+    }
+    fclose(file);
+
+    viewResidents();
+    printf("Select Resident Number to Edit: ");
+    scanf("%d", &selection);
+    while (getchar() != '\n');
+
+    printf("Enter Updated Name: ");
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = 0;
+
+    printf("Enter Updated Age: ");
+    scanf("%d", &age);
+    while (getchar() != '\n');
+
+    printf("Enter Updated Address: ");
+    fgets(address, sizeof(address), stdin);
+    address[strcspn(address, "\n")] = 0;
+
+    sprintf(residents[selection - 1], "%s, %d, %s\n", name, age, address);
+
+    FILE *tempFile = fopen("residents.txt", "w");
+    for (int i = 0; i < index; i++) {
+        fprintf(tempFile, "%s", residents[i]);
+    }
+    fclose(tempFile);
+
+    printf("Resident updated successfully!\n");
 }
