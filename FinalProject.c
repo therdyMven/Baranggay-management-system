@@ -231,7 +231,7 @@ void searchResident() {
     fclose(file);
     system("pause");
 }
-
+                     
 // Function to Delete Resident
 void deleteResident() {
     int total = listResidents();
