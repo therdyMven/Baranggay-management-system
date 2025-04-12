@@ -28674,3 +28674,4 @@ Kletherd Gonzaga, 18, Salawagan
 kleth, 18, mabuhay
 kletherd Gonzaga, 19, mabuhay
 rizza, 19, sumpong
+, 12, 

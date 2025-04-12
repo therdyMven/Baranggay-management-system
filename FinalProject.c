@@ -15,6 +15,7 @@
 void addResident();
 void viewResidents();
 void searchResident();
+void deleteResident();
 void menu();
 char *strcasestr_custom(const char *haystack, const char *needle);
 
@@ -35,7 +36,8 @@ void menu() {
         printf("1. Add Resident\n");
         printf("2. View Residents\n");
         printf("3. Search Resident\n");
-        printf("4. Exit\n");
+        printf("4. Delete Resident\n");
+        printf("5. Exit\n");
         printf("==========================================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -45,10 +47,11 @@ void menu() {
             case 1: addResident(); break;
             case 2: viewResidents(); break;
             case 3: searchResident(); break;
-            case 4: printf("Exiting...\n"); break;
+            case 4: deleteResident(); break;
+            case 5: printf("Exiting...\n"); break;
             default: printf("Invalid choice! Try again.\n");
         }
-    } while (choice != 4);
+    } while (choice != 5);
 }
 
 // Function to Add Resident
@@ -80,7 +83,7 @@ void addResident() {
     printf("Resident added successfully!\n");
 }
 
-// Function to View Residents in a Table Format
+// Function to View Residents
 void viewResidents() {
     FILE *file = fopen("residents.txt", "r");
     if (file == NULL) {
@@ -92,7 +95,7 @@ void viewResidents() {
     int age;
 
     printf("\n==========================================\n");
-    printf("NAME              AGE          ADDRESS\n");
+    printf("   #   NAME                 AGE   ADDRESS\n");
     printf("==========================================\n");
 
     int index = 1;
@@ -144,6 +147,50 @@ void searchResident() {
 
     fclose(file);
     system("pause");
+}
+
+// Function to Delete Resident
+void deleteResident() {
+    FILE *file = fopen("residents.txt", "r");
+    if (file == NULL) {
+        printf("No residents found!\n");
+        return;
+    }
+
+    char name[50], address[100], line[200], deleteName[50];
+    int age, found = 0;
+
+    FILE *tempFile = fopen("temp.txt", "w");
+    if (tempFile == NULL) {
+        printf("Error creating temporary file!\n");
+        fclose(file);
+        return;
+    }
+
+    printf("Enter Name of Resident to Delete: ");
+    fgets(deleteName, sizeof(deleteName), stdin);
+    deleteName[strcspn(deleteName, "\n")] = 0;
+
+    while (fgets(line, sizeof(line), file)) {
+        sscanf(line, "%49[^,], %d, %99[^\n]", name, &age, address);
+        if (strcasecmp(name, deleteName) != 0) {
+            fprintf(tempFile, "%s, %d, %s\n", name, age, address);
+        } else {
+            found = 1;
+        }
+    }
+
+    fclose(file);
+    fclose(tempFile);
+
+    if (found) {
+        remove("residents.txt");
+        rename("temp.txt", "residents.txt");
+        printf("Resident deleted successfully!\n");
+    } else {
+        remove("temp.txt");
+        printf("Resident not found.\n");
+    }
 }
 
 // Custom Case-Insensitive Substring Search Function
