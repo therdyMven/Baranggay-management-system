@@ -1,8 +1,5 @@
-1, Rizza Joy Aquino, 19, Prk. Mabuhay Salawagan Quezon Buk., 12-04-2025
-2, Gonzaga Kletherd M., 12, Prk. Maligaya Brggy. Salawagan , 12-04-2025
-3, Aquino Rizza Joy, 17, Prk. Democracia Salawagan Quezon, 12-04-2025
-4, Loyloy Steven B., 19, Prk. Democracia bggy. Salawagan , 12-04-2025
-5, Diwalay Beverly, 19, Prk. San Roque Brggy. Salawagan, 12-04-2025
-6, Badana Hannah, 29, Prk. Mabuhay Brggy. Salawagan, 12-04-2025
-7, Gonzaga JM, 12, Prk. Maligaya Brggy. Salawagan, 12-04-2025
-8, Gonzales Coby, 28, Prk. Tala Brggy. Salawagan, 12-04-2025
+1, Diwalay Beverly, 19, Prk. San Roque Brggy. Salawagan, 12-04-2025
+2, Gonzaga JM, 12, Prk. Maligaya Brggy. Salawagan, 12-04-2025
+3, Galvan Ruby, 19, Prk. San Roque Brggy. Salawagan, 13-04-2025
+4, Jerusalem Owen M., 57, Prk. Linabo Brggy. Salawagan, 13-04-2025
+5, Badana Hannah, 50, Prk. Linabo Brggy. Salawagan, 13-04-2025
