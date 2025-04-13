@@ -46,16 +46,28 @@ void menu() {
     int choice;
     do {
         system(CLEAR_SCREEN);
-        printf("\n==========================================\n");
-        printf("   BARANGAY RESIDENT MANAGEMENT SYSTEM\n");
-        printf("==========================================\n");
+        printf("\n\n");
+        printf("================================================================================================================ \n\n");
+        printf("  ********    *******    ***       *******    ***         ***   *******   **********   *******   ****       ***  \n");
+        printf(" **********  *********   ***      *********   ***         ***  *********  **********  *********  *****      ***  \n");
+        printf("*****    **  ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  ******     ***  \n");
+        printf("****         ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  *** ***    ***  \n");
+        printf(" *****       *********   ***      *********   ***         ***  *********  ***  *****  *********  ***  ***   ***  \n");
+        printf("   ******    *********   ***      *********   ***   ***   ***  *********  ***  *****  *********  ***   ***  ***  \n");
+        printf("     *****   ***   ***   ***      ***   ***   ***  *****  ***  ***   ***  ***    ***  ***   ***  ***    *** **   \n");
+        printf("***   ****   ***   ***   ***      ***   ***   *** *** *** ***  ***   ***  ***    ***  ***   ***  ***     ******  \n");
+        printf("**********   ***   ***   *******  ***   ***   *****     *****  ***   ***  **********  ***   ***  ***      *****  \n");
+        printf(" ********    ***   ***   *******  ***   ***   ***         ***  ***   ***  **********  ***   ***  ***       ****  \n");
+        printf("\n================================================================================================================ \n");
+        printf("                           BARANGAY SALAWAGAN MANAGEMENT SYSTEM\n");
+        printf("================================================================================================================ \n");
         printf("1. Add Resident\n");
         printf("2. View Residents\n");
         printf("3. Search Resident\n");
         printf("4. Delete Resident\n");
         printf("5. Edit Resident\n");
         printf("6. Exit\n");
-        printf("==========================================\n");
+        printf("================================================================================================================ \n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         while (getchar() != '\n'); // Clear input buffer
@@ -71,6 +83,7 @@ void menu() {
         }
     } while (choice != 6);
 }
+
 
 // Function to Add Resident
 void addResident() {
@@ -95,7 +108,7 @@ void addResident() {
 
     char name[50], address[100], recordDate[20];
     int age;
-
+    
     printf("Enter Name: ");
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = 0; // Remove newline
@@ -197,7 +210,7 @@ void searchResident() {
     }
 
     char searchTerm[50], name[50], address[100], line[200], recordDate[20];
-    int id, age, searchAge, isAgeSearch = 0, found = 0;
+    int id, age, searchAge, isAgeSearch = 0, found = 0, resultNo = 1;
 
     printf("Enter Name, Age, or Address to Search: ");
     fgets(searchTerm, sizeof(searchTerm), stdin);
@@ -208,9 +221,10 @@ void searchResident() {
         isAgeSearch = 1; // Indicates the search is for age
     }
 
-    printf("\n==========================================================================\n");
-    printf("ID  | NAME                       AGE  ADDRESS                       DATE\n");
-    printf("==========================================================================\n");
+    // Display the header
+    printf("\n=================================================================================================================\n");
+    printf("| %-5s | %-25s | %-3s | %-40s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
+    printf("=================================================================================================================\n");
 
     while (fgets(line, sizeof(line), file)) {
         if (sscanf(line, "%d, %49[^,], %d, %99[^,], %19[^\n]", &id, name, &age, address, recordDate) == 5) {
@@ -218,15 +232,18 @@ void searchResident() {
             if ((isAgeSearch && age == searchAge) || 
                 (!isAgeSearch && (strcasestr_custom(name, searchTerm) != NULL || 
                                   strcasestr_custom(address, searchTerm) != NULL))) {
-                printf("%-5d %-25s %3d   %-25s %-10s\n", id, name, age, address, recordDate);
+                printf("| %-5d | %-25s | %-3d | %-40s | %-12s |\n", 
+                       resultNo++, name, age, address, recordDate);
                 found = 1;
             }
         }
     }
 
     if (!found) {
-        printf("No matching records found.\n");
+        printf("| %-5s | %-25s | %-3s | %-40s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-");
     }
+
+    printf("=================================================================================================================\n");
 
     fclose(file);
     system("pause");
