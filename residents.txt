@@ -1,5 +1,7 @@
-1, Diwalay Beverly, 19, Prk. San Roque Brggy. Salawagan, 12-04-2025
-2, Gonzaga JM, 12, Prk. Maligaya Brggy. Salawagan, 12-04-2025
-3, Galvan Ruby, 19, Prk. San Roque Brggy. Salawagan, 13-04-2025
-4, Jerusalem Owen M., 57, Prk. Linabo Brggy. Salawagan, 13-04-2025
-5, Badana Hannah, 50, Prk. Linabo Brggy. Salawagan, 13-04-2025
+1, Aquino Lorenz M., 19, Prk. Maligaya Brggy. Salawagan, 15-04-2025
+2, Aquino James Jr. S., 18, Prk. Tala Brggy. Salawagan, 15-04-2025
+3, Baldamana Karylle S., 18, Prk. Mabuhay Brggy. Salawagan, 15-04-2025
+4, Bensamahan Vincent D., 19, Prk. Maligaya Brggy. Salawaga, 15-04-2025
+5, Quimbo Ian Carlo T., 20, Prk. Democrasia Brggy. Salawagan, 15-04-2025
+6, Quizon Mark Ian L., 19, Prk. Tala Sa Umaga Brggy. Salawagan, 15-04-2025
+7, Bethlehem Jane M., 19, Prk. Democrasia Brggy. Salawagan, 15-04-2025
