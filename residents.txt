@@ -1,7 +1,12 @@
 1, Aquino Lorenz M., 19, Prk. Maligaya Brggy. Salawagan, 15-04-2025
-2, Aquino James Jr. S., 18, Prk. Tala Brggy. Salawagan, 15-04-2025
-3, Baldamana Karylle S., 18, Prk. Mabuhay Brggy. Salawagan, 15-04-2025
-4, Bensamahan Vincent D., 19, Prk. Maligaya Brggy. Salawaga, 15-04-2025
-5, Quimbo Ian Carlo T., 20, Prk. Democrasia Brggy. Salawagan, 15-04-2025
-6, Quizon Mark Ian L., 19, Prk. Tala Sa Umaga Brggy. Salawagan, 15-04-2025
-7, Bethlehem Jane M., 19, Prk. Democrasia Brggy. Salawagan, 15-04-2025
+2, Pausal John Paul Emmanuel, 19, Prk. Mabuhay Brggy. Salawagan, 17-04-2025
+3, Jerusalem Owen M., 19, Prk. Tala Brggy. Salawagan, 17-04-2025
+6, Jamero Ruchel, 19, Prk. Democrasia Brggy. Salawagan, 17-04-2025
+7, Loyloy Steven, 20, Prk. Democrasia Brggy. Salawagan, 17-04-2025
+8, Gonzaga Kletherd , 19, Prk. Mabuhay Brggy. Salawagan, 17-04-2025
+9, Fulguerinas Allyn Matthew, 20, Prk. Democrasia Brggy. Salawagan, 17-04-2025
+10, Simene Yuannie, 20, Prk. Tala Brggy. Salawagan, 17-04-2025
+11, Adlaon Ben Angelou, 19, Prk. Mabuhay Brggy. Salawagan, 17-04-2025
+12, Roselim John Michael, 20, Prk. Mabuhay Brggy. Salawagan, 17-04-2025
+13, Gorgolon Niel Gabriel, 19, Prk. Mabuhay Brggy. Salawagan, 17-04-2025
+14, Toribio Patrick, 19, Prk. Dakila Brggy. Salawagan, 17-04-2025
