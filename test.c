@@ -48,17 +48,6 @@ void menu() {
         system(CLEAR_SCREEN);
         printf("\n\n");
         printf("================================================================================================================ \n\n");
-        printf("  ********    *******    ***       *******    ***         ***   *******   **********   *******   ****       ***  \n");
-        printf(" **********  *********   ***      *********   ***         ***  *********  **********  *********  *****      ***  \n");
-        printf("*****   ***  ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  ******     ***  \n");
-        printf("****         ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  *** ***    ***  \n");
-        printf(" *****       *********   ***      *********   ***         ***  *********  ***  *****  *********  ***  ***   ***  \n");
-        printf("   ******    *********   ***      *********   ***   ***   ***  *********  ***  *****  *********  ***   ***  ***  \n");
-        printf("     *****   ***   ***   ***      ***   ***   ***  *****  ***  ***   ***  ***    ***  ***   ***  ***    *** **   \n");
-        printf("***   *****  ***   ***   ***      ***   ***   *** *** *** ***  ***   ***  ***    ***  ***   ***  ***     ******  \n");
-        printf("***********  ***   ***   *******  ***   ***   *****     *****  ***   ***  **********  ***   ***  ***      *****  \n");
-        printf(" *********   ***   ***   *******  ***   ***   ***         ***  ***   ***  **********  ***   ***  ***       ****  \n");
-        printf("\n================================================================================================================\n");
         printf("                           BARANGAY SALAWAGAN MANAGEMENT SYSTEM                                                  \n");
         printf("================================================================================================================ \n");
         printf("1. Add Resident                                                                                                  \n");
@@ -84,7 +73,6 @@ void menu() {
     } while (choice != 6);
 }
 
-
 // Function to Add Resident
 void addResident() {
     FILE *file = fopen("residents.txt", "a+");
@@ -106,9 +94,9 @@ void addResident() {
         }
     }
 
-    char name[50], address[100], recordDate[20];
+    char name[50], address[100], contactNo[15], recordDate[20];
     int age;
-    
+
     printf("Enter Name: ");
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = 0; // Remove newline
@@ -121,12 +109,16 @@ void addResident() {
     fgets(address, sizeof(address), stdin);
     address[strcspn(address, "\n")] = 0; // Remove newline
 
+    printf("Enter Contact No.: ");
+    fgets(contactNo, sizeof(contactNo), stdin);
+    contactNo[strcspn(contactNo, "\n")] = 0; // Remove newline
+
     // Get the current date
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     sprintf(recordDate, "%02d-%02d-%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 
-    fprintf(file, "%d, %s, %d, %s, %s\n", id, name, age, address, recordDate);
+    fprintf(file, "%d, %s, %d, %s, %s, %s\n", id, name, age, address, contactNo, recordDate);
     fclose(file);
 
     printf("Resident added successfully!\n");
@@ -145,6 +137,7 @@ int listResidents() {
         char name[50];
         int age;
         char address[100];
+        char contactNo[15];
         char recordDate[20];
     } Resident;
 
@@ -153,12 +146,12 @@ int listResidents() {
 
     char line[200];
     while (fgets(line, sizeof(line), file)) {
-        // Updated sscanf format string to handle spaces after commas
-        if (sscanf(line, "%*d, %49[^,], %d, %99[^,], %[^\n]", 
+        if (sscanf(line, "%*d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", 
                    residents[count].name, 
                    &residents[count].age, 
                    residents[count].address, 
-                   residents[count].recordDate) == 4) {
+                   residents[count].contactNo, 
+                   residents[count].recordDate) == 5) {
             count++;
         }
     }
@@ -176,24 +169,25 @@ int listResidents() {
     }
 
     // Display the residents
-    printf("\n=================================================================================================================\n");
-    printf("| %-5s | %-25s | %-3s | %-40s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
-    printf("=================================================================================================================\n");
+    printf("\n=========================================================================================================================\n");
+    printf("| %-5s | %-25s | %-3s | %-40s | %-15s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
+    printf("=========================================================================================================================\n");
 
     for (int i = 0; i < count; i++) {
-        printf("| %-5d | %-25s | %-3d | %-40s | %-12s |\n", 
-               i + 1, // Reassign NO starting from 1
+        printf("| %-5d | %-25s | %-3d | %-40s | %-15s | %-12s |\n", 
+               i + 1, 
                residents[i].name, 
                residents[i].age, 
                residents[i].address, 
+               residents[i].contactNo, 
                residents[i].recordDate);
     }
 
-    printf("=================================================================================================================\n");
+    printf("=========================================================================================================================\n");
     return count;
 }
 
-//Function to View Residents
+// Function to View Residents
 void viewResidents() {
     if (listResidents() == 0) {
         printf("No residents to display.\n");
@@ -209,46 +203,44 @@ void searchResident() {
         return;
     }
 
-    char searchTerm[50], name[50], address[100], line[200], recordDate[20];
+    char searchTerm[50], name[50], address[100], contactNo[15], line[200], recordDate[20];
     int id, age, searchAge, isAgeSearch = 0, found = 0, resultNo = 1;
 
-    printf("Enter Name, Age, or Address to Search: ");
+    printf("Enter Name, Age, Address, or Contact No. to Search: ");
     fgets(searchTerm, sizeof(searchTerm), stdin);
     searchTerm[strcspn(searchTerm, "\n")] = 0; // Remove newline
 
-    // Check if the search term is a number (for age search)
     if (sscanf(searchTerm, "%d", &searchAge) == 1) {
-        isAgeSearch = 1; // Indicates the search is for age
+        isAgeSearch = 1;
     }
 
-    // Display the header
-    printf("\n=================================================================================================================\n");
-    printf("| %-5s | %-25s | %-3s | %-40s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
-    printf("=================================================================================================================\n");
+    printf("\n=========================================================================================================================\n");
+    printf("| %-5s | %-25s | %-3s | %-40s | %-15s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
+    printf("=========================================================================================================================\n");
 
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %19[^\n]", &id, name, &age, address, recordDate) == 5) {
-            // Check if the search term matches Name, Age, or Address
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %19[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if ((isAgeSearch && age == searchAge) || 
                 (!isAgeSearch && (strcasestr_custom(name, searchTerm) != NULL || 
-                                  strcasestr_custom(address, searchTerm) != NULL))) {
-                printf("| %-5d | %-25s | %-3d | %-40s | %-12s |\n", 
-                       resultNo++, name, age, address, recordDate);
+                                  strcasestr_custom(address, searchTerm) != NULL || 
+                                  strcasestr_custom(contactNo, searchTerm) != NULL))) {
+                printf("| %-5d | %-25s | %-3d | %-40s | %-15s | %-12s |\n", 
+                       resultNo++, name, age, address, contactNo, recordDate);
                 found = 1;
             }
         }
     }
 
     if (!found) {
-        printf("| %-5s | %-25s | %-3s | %-40s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-");
+        printf("| %-5s | %-25s | %-3s | %-40s | %-15s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-", "-");
     }
 
-    printf("=================================================================================================================\n");
+    printf("=========================================================================================================================\n");
 
     fclose(file);
     system("pause");
 }
-                           
+
 // Function to Delete Resident
 void deleteResident() {
     int total = listResidents();
@@ -277,30 +269,28 @@ void deleteResident() {
         return;
     }
 
-    char line[200], name[50], address[100], recordDate[20];
+    char line[200], name[50], address[100], contactNo[15], recordDate[20];
     int id, age, currentNo = 1, found = 0, idToDelete = -1;
 
-    // First pass: Find the actual `id` corresponding to the entered `NO`
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %[^\n]", &id, name, &age, address, recordDate) == 5) {
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if (currentNo == noToDelete) {
-                idToDelete = id; // Map NO to the actual ID
+                idToDelete = id;
                 break;
             }
             currentNo++;
         }
     }
 
-    rewind(file); // Reset file pointer to the beginning for the second pass
+    rewind(file);
 
-    // Second pass: Write all residents except the one with the matching `id`
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %[^\n]", &id, name, &age, address, recordDate) == 5) {
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if (id == idToDelete) {
-                found = 1; // Skip the resident to be deleted
+                found = 1;
                 continue;
             }
-            fprintf(tempFile, "%d, %s, %d, %s, %s\n", id, name, age, address, recordDate);
+            fprintf(tempFile, "%d, %s, %d, %s, %s, %s\n", id, name, age, address, contactNo, recordDate);
         }
     }
 
@@ -320,6 +310,7 @@ void deleteResident() {
 
     system("pause");
 }
+
 // Function to Edit Resident
 void editResident() {
     int total = listResidents();
@@ -338,11 +329,11 @@ void editResident() {
         return;
     }
 
-    char line[200], name[50], address[100], newName[50], newAddress[100], recordDate[20];
+    char line[200], name[50], address[100], contactNo[15], newName[50], newAddress[100], newContactNo[15], recordDate[20];
     int id, age, newAge, found = 0, choice;
 
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %19[^\n]", &id, name, &age, address, recordDate) == 5) {
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %19[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if (id == idToEdit) {
                 found = 1;
 
@@ -350,6 +341,7 @@ void editResident() {
                 printf("1. Name\n");
                 printf("2. Age\n");
                 printf("3. Address\n");
+                printf("4. Contact No.\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choice);
                 while (getchar() != '\n'); // Clear input buffer
@@ -358,27 +350,33 @@ void editResident() {
                     case 1:
                         printf("Enter New Name: ");
                         fgets(newName, sizeof(newName), stdin);
-                        newName[strcspn(newName, "\n")] = 0; // Remove newline
-                        strcpy(name, newName); // Update name
+                        newName[strcspn(newName, "\n")] = 0;
+                        strcpy(name, newName);
                         break;
                     case 2:
                         printf("Enter New Age: ");
                         scanf("%d", &newAge);
-                        while (getchar() != '\n'); // Clear input buffer
-                        age = newAge; // Update age
+                        while (getchar() != '\n');
+                        age = newAge;
                         break;
                     case 3:
                         printf("Enter New Address: ");
                         fgets(newAddress, sizeof(newAddress), stdin);
-                        newAddress[strcspn(newAddress, "\n")] = 0; // Remove newline
-                        strcpy(address, newAddress); // Update address
+                        newAddress[strcspn(newAddress, "\n")] = 0;
+                        strcpy(address, newAddress);
+                        break;
+                    case 4:
+                        printf("Enter New Contact No.: ");
+                        fgets(newContactNo, sizeof(newContactNo), stdin);
+                        newContactNo[strcspn(newContactNo, "\n")] = 0;
+                        strcpy(contactNo, newContactNo);
                         break;
                     default:
                         printf("Invalid choice! No changes made.\n");
                         break;
                 }
 
-                fprintf(tempFile, "%d, %s, %d, %s, %s\n", id, name, age, address, recordDate);
+                fprintf(tempFile, "%d, %s, %d, %s, %s, %s\n", id, name, age, address, contactNo, recordDate);
             } else {
                 fprintf(tempFile, "%s", line);
             }
