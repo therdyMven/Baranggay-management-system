@@ -47,20 +47,20 @@ void menu() {
     do {
         system(CLEAR_SCREEN);
         printf("\n\n");
-        printf("______________________________________________________________________________________________________________________ \n");
-        printf("    ********    *******    ***       *******    ***         ***   *******   **********   *******   ****       ***  \n");
-        printf("   **********  *********   ***      *********   ***         ***  *********  **********  *********  *****      ***  \n");
-        printf("  *****   ***  ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  ******     ***  \n");
-        printf("  ****         ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  *** ***    ***  \n");
-        printf("   *****       *********   ***      *********   ***         ***  *********  ***  *****  *********  ***  ***   ***  \n");
-        printf("     ******    *********   ***      *********   ***   ***   ***  *********  ***  *****  *********  ***   ***  ***  \n");
-        printf("       *****   ***   ***   ***      ***   ***   ***  *****  ***  ***   ***  ***    ***  ***   ***  ***    *** ***   \n");
-        printf("  ***   *****  ***   ***   ***      ***   ***   *** *** *** ***  ***   ***  ***    ***  ***   ***  ***     ******  \n");
-        printf("  ***********  ***   ***   *******  ***   ***   *****     *****  ***   ***  **********  ***   ***  ***      *****  \n");
-        printf("   *********   ***   ***   *******  ***   ***   ***         ***  ***   ***  **********  ***   ***  ***       ****  \n");
-        printf("\n______________________________________________________________________________________________________________________\n\n");
+        printf("_____________________________________________________________________________________________________________________ \n\n");
+        printf("  ********    *******    ***       *******    ***         ***   *******   **********   *******   ****       ***  \n");
+        printf(" **********  *********   ***      *********   ***         ***  *********  **********  *********  *****      ***  \n");
+        printf("*****   ***  ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  ******     ***  \n");
+        printf("****         ***   ***   ***      ***   ***   ***         ***  ***   ***  ***         ***   ***  *** ***    ***  \n");
+        printf(" *****       *********   ***      *********   ***         ***  *********  ***  *****  *********  ***  ***   ***  \n");
+        printf("   ******    *********   ***      *********   ***   ***   ***  *********  ***  *****  *********  ***   ***  ***  \n");
+        printf("     *****   ***   ***   ***      ***   ***   ***  *****  ***  ***   ***  ***    ***  ***   ***  ***    *** ***   \n");
+        printf("***   *****  ***   ***   ***      ***   ***   *** *** *** ***  ***   ***  ***    ***  ***   ***  ***     ******  \n");
+        printf("***********  ***   ***   *******  ***   ***   *****     *****  ***   ***  **********  ***   ***  ***      *****  \n");
+        printf(" *********   ***   ***   *******  ***   ***   ***         ***  ***   ***  **********  ***   ***  ***       ****  \n");
+        printf("\n_____________________________________________________________________________________________________________________\n\n");
         printf("                           BARANGAY SALAWAGAN MANAGEMENT SYSTEM                                                  \n");
-        printf("______________________________________________________________________________________________________________________ \n");
+        printf("_____________________________________________________________________________________________________________________ \n");
         printf("1. Add Resident                                                                                                  \n");
         printf("2. View Residents                                                                                                \n");
         printf("3. Search Resident                                                                                               \n");
@@ -87,7 +87,7 @@ void menu() {
 
 // Function to Add Resident
 void addResident() {
-    FILE *file = fopen("resident.txt", "a+");
+    FILE *file = fopen("residents.txt", "a+");
     if (file == NULL) {
         printf("Error opening residents file!\n");
         return;
@@ -139,7 +139,7 @@ void addResident() {
 
 // Function to View Residents
 int listResidents() {
-    FILE *file = fopen("resident.txt", "r");
+    FILE *file = fopen("residents.txt", "r");
     if (file == NULL) {
         printf("No residents found!\n");
         return 0;
@@ -181,9 +181,9 @@ int listResidents() {
     }
 
     // Display the residents
-    printf("\n______________________________________________________________________________________________________________________\n");
+    printf("\n_____________________________________________________________________________________________________________________\n");
     printf("|%-2s| %-30s   | %-0s | %-40s  |%-15s |%-7s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
-    printf("______________________________________________________________________________________________________________________\n");
+    printf("_____________________________________________________________________________________________________________________\n");
 
     for (int i = 0; i < count; i++) {
         printf("|%-2d| %-30s   | %-0d  | %-40s  |%-15s |%-7s |\n", 
@@ -195,7 +195,7 @@ int listResidents() {
                residents[i].recordDate);
     }
 
-    printf("______________________________________________________________________________________________________________________\n");
+    printf("_____________________________________________________________________________________________________________________\n");
     return count;
 }
 
@@ -209,7 +209,7 @@ void viewResidents() {
 
 // Function to Search Resident
 void searchResident() {
-    FILE *file = fopen("resident.txt", "r");
+    FILE *file = fopen("residents.txt", "r");
     if (file == NULL) {
         printf("No residents found!\n");
         return;
@@ -227,7 +227,7 @@ void searchResident() {
     }
 
     printf("\n_____________________________________________________________________________________________________________________\n");
-    printf("| %-2s | %-30s |%-0s | %-40s | %-15s | %-7s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
+    printf("| %-2s | %-25s |%-0s | %-40s | %-18s | %-7s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
     printf("_____________________________________________________________________________________________________________________\n");
     while (fgets(line, sizeof(line), file)) {
         if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
@@ -236,7 +236,7 @@ void searchResident() {
                                   strcasestr_custom(address, searchTerm) != NULL || 
                                   strcasestr_custom(contactNo, searchTerm) != NULL))) {
                 
-                        printf("| %-2d | %-30s | %-0d | %-40s | %-15s | %-7s |\n", 
+                        printf("| %-2d | %-25s | %-0d | %-40s | %-18s | %-7s |\n", 
                        resultNo++, name, age, address, contactNo, recordDate);
                 found = 1;
             }
@@ -244,10 +244,10 @@ void searchResident() {
     }
 
     if (!found) {
-        printf("|%-2d| %-30s   | %-0d  | %-40s  |%-15s |%-7s |\n", "N/A", "No matching records found", "-", "-", "-", "-");     
+        printf("| %-2s | %-25s | %-3s | %-55s | %-15s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-", "-");
     }
 
-    printf("______________________________________________________________________________________________________________________\n");
+    printf("======================================================================================================================\n");
 
     fclose(file);
     system("pause");
@@ -273,7 +273,7 @@ void deleteResident() {
         return;
     }
 
-    FILE *file = fopen("resident.txt", "r");
+    FILE *file = fopen("residents.txt", "r");
     FILE *tempFile = fopen("temp.txt", "w");
 
     if (file == NULL || tempFile == NULL) {
@@ -281,12 +281,12 @@ void deleteResident() {
         return;
     }
 
-    char line[200], name[50], address[100], recordDate[20];
+    char line[200], name[50], address[100], contactNo[15], recordDate[20];
     int id, age, currentNo = 1, found = 0, idToDelete = -1;
 
     // First pass: Find the actual `id` corresponding to the entered `NO`
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %[^\n]", &id, name, &age, address, recordDate) == 5) {
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if (currentNo == noToDelete) {
                 idToDelete = id; // Map NO to the actual ID
                 break;
@@ -299,19 +299,20 @@ void deleteResident() {
 
     // Second pass: Write all residents except the one with the matching `id`
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %[^\n]", &id, name, &age, address, recordDate) == 5) {
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if (id == idToDelete) {
                 found = 1; // Skip the resident to be deleted
                 continue;
             }
-            fprintf(tempFile, "%d, %s, %d, %s, %s\n", id, name, age, address, recordDate);
+            fprintf(tempFile, "%d, %s, %d, %s, %s, %s\n", id, name, age, address, contactNo, recordDate);
         }
     }
 
     fclose(file);
     fclose(tempFile);
 
-    if (remove("resident.txt") != 0 || rename("temp.txt", "residents.txt") != 0) {
+    // Replace the original file with the updated file
+    if (remove("residents.txt") != 0 || rename("temp.txt", "residents.txt") != 0) {
         printf("Error updating the file!\n");
         return;
     }
@@ -324,6 +325,7 @@ void deleteResident() {
 
     system("pause");
 }
+
 // Function to Edit Resident
 void editResident() {
     int total = listResidents();
@@ -334,7 +336,7 @@ void editResident() {
     scanf("%d", &idToEdit);
     while (getchar() != '\n'); // Clear input buffer
 
-    FILE *file = fopen("resident.txt", "r");
+    FILE *file = fopen("residents.txt", "r");
     FILE *tempFile = fopen("temp.txt", "w");
 
     if (file == NULL || tempFile == NULL) {
@@ -342,11 +344,11 @@ void editResident() {
         return;
     }
 
-    char line[200], name[50], address[100], newName[50], newAddress[100], recordDate[20];
+    char line[200], name[50], address[100], contactNo[15], newName[50], newAddress[100], newContactNo[15], recordDate[20];
     int id, age, newAge, found = 0, choice;
 
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %19[^\n]", &id, name, &age, address, recordDate) == 5) {
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %19[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if (id == idToEdit) {
                 found = 1;
 
@@ -354,6 +356,7 @@ void editResident() {
                 printf("1. Name\n");
                 printf("2. Age\n");
                 printf("3. Address\n");
+                printf("4. Contact No.\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choice);
                 while (getchar() != '\n'); // Clear input buffer
@@ -377,12 +380,18 @@ void editResident() {
                         newAddress[strcspn(newAddress, "\n")] = 0; // Remove newline
                         strcpy(address, newAddress); // Update address
                         break;
+                    case 4:
+                        printf("Enter New Contact No.: ");
+                        fgets(newContactNo, sizeof(newContactNo), stdin);
+                        newContactNo[strcspn(newContactNo, "\n")] = 0; // Remove newline
+                        strcpy(contactNo, newContactNo); // Update contact number
+                        break;
                     default:
                         printf("Invalid choice! No changes made.\n");
                         break;
                 }
 
-                fprintf(tempFile, "%d, %s, %d, %s, %s\n", id, name, age, address, recordDate);
+                fprintf(tempFile, "%d, %s, %d, %s, %s, %s\n", id, name, age, address, contactNo, recordDate);
             } else {
                 fprintf(tempFile, "%s", line);
             }
@@ -392,7 +401,7 @@ void editResident() {
     fclose(file);
     fclose(tempFile);
 
-    if (remove("resident.txt") != 0 || rename("temp.txt", "resident.txt") != 0) {
+    if (remove("residents.txt") != 0 || rename("temp.txt", "residents.txt") != 0) {
         printf("Error updating the file!\n");
         return;
     }
