@@ -145,6 +145,7 @@ int listResidents() {
         char name[50];
         int age;
         char address[100];
+        char contactNo[15];
         char recordDate[20];
     } Resident;
 
@@ -153,12 +154,12 @@ int listResidents() {
 
     char line[200];
     while (fgets(line, sizeof(line), file)) {
-        // Updated sscanf format string to handle spaces after commas
-        if (sscanf(line, "%*d, %49[^,], %d, %99[^,], %[^\n]", 
+        if (sscanf(line, "%*d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", 
                    residents[count].name, 
                    &residents[count].age, 
                    residents[count].address, 
-                   residents[count].recordDate) == 4) {
+                   residents[count].contactNo, 
+                   residents[count].recordDate) == 5) {
             count++;
         }
     }
@@ -176,20 +177,21 @@ int listResidents() {
     }
 
     // Display the residents
-    printf("\n=================================================================================================================\n");
-    printf("| %-2s | %-25s | %-3s | %-55s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
-    printf("=================================================================================================================\n");
+    printf("\n=========================================================================================================================\n");
+    printf("| %-2s | %-25s | %-3s | %-55s | %-15s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
+    printf("=========================================================================================================================\n");
 
     for (int i = 0; i < count; i++) {
-        printf("| %-2d | %-25s | %-3d | %-55s | %-12s |\n", 
-               i + 1, // Reassign NO starting from 1
+        printf("| %-2d | %-25s | %-3d | %-55s | %-15s | %-12s |\n", 
+               i + 1, 
                residents[i].name, 
                residents[i].age, 
                residents[i].address, 
+               residents[i].contactNo, 
                residents[i].recordDate);
     }
 
-    printf("=================================================================================================================\n");
+    printf("=========================================================================================================================\n");
     return count;
 }
 
@@ -240,7 +242,7 @@ void searchResident() {
     }
 
     if (!found) {
-        printf("| %-2s | %-25s | %-3s | %-55s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-");
+        printf("| %-2s | %-25s | %-3s | %-s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-");
     }
 
     printf("=================================================================================================================\n");
