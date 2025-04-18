@@ -181,9 +181,9 @@ int listResidents() {
     }
 
     // Display the residents
-    printf("\n=========================================================================================================================\n");
+    printf("\n==================================================================================================================\n");
     printf("| %-2s | %-25s | %-3s | %-55s | %-15s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
-    printf("=========================================================================================================================\n");
+    printf("===================================================================================================================\n");
 
     for (int i = 0; i < count; i++) {
         printf("| %-2d | %-25s | %-3d | %-55s | %-15s | %-12s |\n", 
@@ -215,41 +215,39 @@ void searchResident() {
         return;
     }
 
-    char searchTerm[50], name[50], address[100], line[200], recordDate[20];
+    char searchTerm[50], name[50], address[100], contactNo[15], line[200], recordDate[20];
     int id, age, searchAge, isAgeSearch = 0, found = 0, resultNo = 1;
 
-    printf("Enter Name, Age, or Address to Search: ");
+    printf("Enter Name, Age, Address, or Contact No. to Search: ");
     fgets(searchTerm, sizeof(searchTerm), stdin);
     searchTerm[strcspn(searchTerm, "\n")] = 0; // Remove newline
 
-    // Check if the search term is a number (for age search)
     if (sscanf(searchTerm, "%d", &searchAge) == 1) {
-        isAgeSearch = 1; // Indicates the search is for age
+        isAgeSearch = 1;
     }
 
-    // Display the header
-    printf("\n=================================================================================================================\n");
-    printf("| %-2s | %-25s | %-3s | %-55s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
-    printf("=================================================================================================================\n");
+    printf("\n==================================================================================================================\n");
+    printf("| %-2s | %-25s | %-3s | %-55s | %-15s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
+    printf("===================================================================================================================\n");
 
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %19[^\n]", &id, name, &age, address, recordDate) == 5) {
-            // Check if the search term matches Name, Age, or Address
+        if (sscanf(line, "%d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", &id, name, &age, address, contactNo, recordDate) == 6) {
             if ((isAgeSearch && age == searchAge) || 
                 (!isAgeSearch && (strcasestr_custom(name, searchTerm) != NULL || 
-                                  strcasestr_custom(address, searchTerm) != NULL))) {
-                printf("| %-2d | %-25s | %-3d | %-55s | %-12s |\n", 
-                       resultNo++, name, age, address, recordDate);
+                                  strcasestr_custom(address, searchTerm) != NULL || 
+                                  strcasestr_custom(contactNo, searchTerm) != NULL))) {
+                printf("| %-2d | %-25s | %-3d | %-55s | %-15s | %-12s |\n", 
+                       resultNo++, name, age, address, contactNo, recordDate);
                 found = 1;
             }
         }
     }
 
     if (!found) {
-        printf("| %-2s | %-25s | %-3s | %-s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-");
+        printf("| %-2s | %-25s | %-3s | %-55s | %-15s | %-12s |\n", "N/A", "No matching records found", "-", "-", "-", "-");
     }
 
-    printf("=================================================================================================================\n");
+    printf("=========================================================================================================================\n");
 
     fclose(file);
     system("pause");
