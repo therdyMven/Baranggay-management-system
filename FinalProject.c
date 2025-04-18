@@ -177,11 +177,11 @@ int listResidents() {
 
     // Display the residents
     printf("\n=================================================================================================================\n");
-    printf("| %-2s | %-25s | %-3s | %-30s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
+    printf("| %-2s | %-25s | %-3s | %-55s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
     printf("=================================================================================================================\n");
 
     for (int i = 0; i < count; i++) {
-        printf("| %-2d | %-25s | %-3d | %-40s | %-12s |\n", 
+        printf("| %-2d | %-25s | %-3d | %-55s | %-12s |\n", 
                i + 1, // Reassign NO starting from 1
                residents[i].name, 
                residents[i].age, 
@@ -223,7 +223,7 @@ void searchResident() {
 
     // Display the header
     printf("\n=================================================================================================================\n");
-    printf("| %-2s | %-25s | %-3s | %-30s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
+    printf("| %-2s | %-25s | %-3s | %-55s | %-12s |\n", "NO", "NAME", "AGE", "ADDRESS", "DATE ADDED");
     printf("=================================================================================================================\n");
 
     while (fgets(line, sizeof(line), file)) {
@@ -232,7 +232,7 @@ void searchResident() {
             if ((isAgeSearch && age == searchAge) || 
                 (!isAgeSearch && (strcasestr_custom(name, searchTerm) != NULL || 
                                   strcasestr_custom(address, searchTerm) != NULL))) {
-                printf("| %-5d | %-25s | %-3d | %-40s | %-12s |\n", 
+                printf("| %-2d | %-25s | %-3d | %-40s | %-12s |\n", 
                        resultNo++, name, age, address, recordDate);
                 found = 1;
             }
