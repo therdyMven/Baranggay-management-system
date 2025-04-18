@@ -106,9 +106,9 @@ void addResident() {
         }
     }
 
-    char name[50], address[100], recordDate[20];
+    char name[50], address[100], contactNo[15], recordDate[20];
     int age;
-    
+
     printf("Enter Name: ");
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = 0; // Remove newline
@@ -121,12 +121,16 @@ void addResident() {
     fgets(address, sizeof(address), stdin);
     address[strcspn(address, "\n")] = 0; // Remove newline
 
+    printf("Enter Contact No.: ");
+    fgets(contactNo, sizeof(contactNo), stdin);
+    contactNo[strcspn(contactNo, "\n")] = 0; // Remove newline
+
     // Get the current date
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     sprintf(recordDate, "%02d-%02d-%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 
-    fprintf(file, "%d, %s, %d, %s, %s\n", id, name, age, address, recordDate);
+    fprintf(file, "%d, %s, %d, %s, %s, %s\n", id, name, age, address, contactNo, recordDate);
     fclose(file);
 
     printf("Resident added successfully!\n");
