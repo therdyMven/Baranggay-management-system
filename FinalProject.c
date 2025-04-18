@@ -232,7 +232,7 @@ void searchResident() {
             if ((isAgeSearch && age == searchAge) || 
                 (!isAgeSearch && (strcasestr_custom(name, searchTerm) != NULL || 
                                   strcasestr_custom(address, searchTerm) != NULL))) {
-                printf("| %-2d | %-25s | %-3d | %-40s | %-12s |\n", 
+                printf("| %-2d | %-25s | %-3d | %-55s | %-12s |\n", 
                        resultNo++, name, age, address, recordDate);
                 found = 1;
             }
