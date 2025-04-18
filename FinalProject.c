@@ -182,11 +182,11 @@ int listResidents() {
 
     // Display the residents
     printf("\n==================================================================================================================\n");
-    printf("| %-2s | %-25s | %-3s | %-25s | %-20s | %-7s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
+    printf("| %-2s | %-25s |%-0s | %-40s | %-25s | %-7s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
     printf("===================================================================================================================\n");
 
     for (int i = 0; i < count; i++) {
-        printf("| %-2d | %-25s | %-3d | %-55s | %-15s | %-12s |\n", 
+        printf("| %-2d | %-25s | %-0d | %-40s | %-25s | %-7s |\n", 
                i + 1, 
                residents[i].name, 
                residents[i].age, 
