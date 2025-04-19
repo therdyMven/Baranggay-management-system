@@ -271,13 +271,11 @@ void deleteResident() {
     }
 
     char line[200];
-    int currentNo = 1, found = 0;
+    int currentNo = 1;
 
     // Write all residents except the one with the matching NO.
     while (fgets(line, sizeof(line), file)) {
-        if (currentNo == noToDelete) {
-            found = 1; // Skip the resident to be deleted
-        } else {
+        if (currentNo != noToDelete) {
             fputs(line, tempFile); // Write the resident to the temp file
         }
         currentNo++;
@@ -292,12 +290,7 @@ void deleteResident() {
         return;
     }
 
-    if (found) {
-        printf("Resident deleted successfully!\n");
-    } else {
-        printf("Resident with NO. %d not found!\n", noToDelete);
-    }
-
+    printf("Resident deleted successfully!\n");
     system("pause");
 }
 
