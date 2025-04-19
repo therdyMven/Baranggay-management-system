@@ -156,14 +156,13 @@ int listResidents() {
     Resident residents[MAX_RESIDENTS];
     int count = 0;
 
-
     char line[200];
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%*d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", 
-                   residents[count].name, 
-                   &residents[count].age, 
-                   residents[count].address, 
-                   residents[count].contactNo, 
+        if (sscanf(line, "%49[^,], %d, %99[^,], %14[^,], %[^\n]",
+                   residents[count].name,
+                   &residents[count].age,
+                   residents[count].address,
+                   residents[count].contactNo,
                    residents[count].recordDate) == 5) {
             count++;
         }
@@ -181,23 +180,24 @@ int listResidents() {
         }
     }
 
-    // Display the residents
+    // Display the residents with dynamically assigned IDs
     printf("\n_____________________________________________________________________________________________________________________\n");
     printf("|%-2s| %-30s   | %-0s | %-40s  |%-15s |%-7s |\n", "NO", "NAME", "AGE", "ADDRESS", "CONTACT NO.", "DATE ADDED");
     printf("_____________________________________________________________________________________________________________________\n");
 
     for (int i = 0; i < count; i++) {
-        printf("|%-2d| %-30s   | %-0d  | %-40s  |%-15s |%-7s |\n", 
-               i + 1, 
-               residents[i].name, 
-               residents[i].age, 
-               residents[i].address, 
-               residents[i].contactNo, 
+        printf("|%-2d| %-30s   | %-0d  | %-40s  |%-15s |%-7s |\n",
+               i + 1, // Dynamically assigned ID
+               residents[i].name,
+               residents[i].age,
+               residents[i].address,
+               residents[i].contactNo,
                residents[i].recordDate);
     }
 
     printf("_____________________________________________________________________________________________________________________\n");
     return count;
+   return count;
 }
 
 //Function to View Residents
