@@ -1,4 +1,2 @@
-1, AQUINO LORENZ, 19, Prk. Maligaya Brggy. Salawagan, 09838438902, 15-04-2025
-9, RIVERA FRENZEN, 19, Prk. Demokrasya Brggy. Salawagan, 09267384951, 18-04-2025
-10, PAUSAL JOHN PAUL EMANNUEL, 19, Prk. Kirikitan Brggy. Salawagan , 09875673829, 19-04-2025
-11, GONZAGA KLETHERD, 18, Prk. Maligaya Brggy. Salawagan, 09837253819, 19-04-2025
+11, RIVERA FRENZEN, 19, Prk. Demokrasya Brggy. Salawagan, 09267384951, 18-04-2025
+14, LOYLOY STEVEN, 19, Prk. Tala Brggy. Salawagan, 09754786531, 19-04-2025
