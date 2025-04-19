@@ -1,11 +1,12 @@
-
-// Function to Search Resident
-void searchResident() {
-    FILE *file = fopen("residents.txt", "r");
-    if (file == NULL) {
-        printf("No residents found!\n");
-        return;
+    char line[200];
+    while (fgets(line, sizeof(line), file)) {
+        if (sscanf(line, "%*d, %49[^,], %d, %99[^,], %14[^,], %[^\n]", 
+                   residents[count].name, 
+                   &residents[count].age, 
+                   residents[count].address, 
+                   residents[count].contactNo, 
+                   residents[count].recordDate) == 5) {
+            count++;
+        }
     }
-
-    char searchTerm[50], name[50], address[100], line[200], recordDate[20];
-    }
+    fclose(file);
