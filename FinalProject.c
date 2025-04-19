@@ -7,9 +7,9 @@
 #define MAX_RESIDENTS 300 // Maximum number of residents
 
 #ifdef _WIN32
-    #define CLEAR_SCREEN "cls"
+#define CLEAR_SCREEN "cls"
 #else
-    #define CLEAR_SCREEN "clear"
+#define CLEAR_SCREEN "clear"
 #endif
 
 // Function Prototypes
