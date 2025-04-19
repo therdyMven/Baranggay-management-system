@@ -93,19 +93,6 @@ void addResident() {
         return;
     }
 
-    int no = 1; // Default NO for the first resident
-    char line[200];
-
-    // Find the last valid NO in the file
-    while (fgets(line, sizeof(line), file)) {
-        int tempNo;
-        if (sscanf(line, "%d,", &tempNo) == 1) {
-            if (tempNo > 0) { // Ensure the NO is valid
-                no = tempNo + 1; // Increment the NO for the next resident
-            }
-        }
-    }
-
     char name[50], address[100], contactNo[15], recordDate[20];
     int age;
 
@@ -130,7 +117,7 @@ void addResident() {
     struct tm tm = *localtime(&t);
     sprintf(recordDate, "%02d-%02d-%04d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 
-    fprintf(file, "%d, %s, %d, %s, %s, %s\n", no, name, age, address, contactNo, recordDate);
+    fprintf(file, "%s, %d, %s, %s, %s\n", name, age, address, contactNo, recordDate);
     fclose(file);
 
     printf("Resident added successfully!\n");
